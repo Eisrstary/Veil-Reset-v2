@@ -2,6 +2,8 @@ import { HomeScene } from './scenes/HomeScene';
 import { Game as GameScene } from './scenes/Game';
 import { PAPSTestScene } from './scenes/PAPSTestScene';
 import { AVGScene } from './scenes/AVGScene';
+import { UIScene } from './scenes/UIScene';
+import { OperatorTestScene } from './scenes/OperatorTestScene';
 import { AUTO, Game, Scale, Types, WEBGL } from 'phaser';
 
 /* ================================================================
@@ -25,7 +27,7 @@ const config: Types.Core.GameConfig = {
         mode: Scale.FIT,
         autoCenter: Scale.CENTER_BOTH,
     },
-    scene: [HomeScene, GameScene, PAPSTestScene, AVGScene],
+    scene: [HomeScene, GameScene, PAPSTestScene, AVGScene, UIScene, OperatorTestScene],
 };
 
 const StartGame = (parent: string) => {

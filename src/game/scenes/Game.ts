@@ -91,7 +91,7 @@ export class Game extends Scene {
     this.updateUI();
     
     // 更新区块状态
-    this.blocks.forEach(block => block.update(delta));
+    this.blocks.forEach(block => block.update());
   }
 
   // ==================== 初始化方法 ====================

@@ -83,7 +83,7 @@ export class Block {
     console.log(`区块 ${this.id} 创建完成 - 类型: ${this.config.type}, 位置: (${this.x}, ${this.y})`);
   }
 
-  update(delta: number): void {
+  update(): void {
     // 更新区块状态
     if (this.config.isActive && this.config.eventFrequency > 0) {
       // 这里可以添加定时事件触发逻辑
@@ -338,15 +338,13 @@ export class Block {
     const halfSize = size / 2;
     const quarterSize = size / 4;
     
-    const points = [
-      { x: 0, y: -quarterSize },
-      { x: halfSize, y: 0 },
-      { x: 0, y: quarterSize },
-      { x: -halfSize, y: 0 },
-      { x: 0, y: -quarterSize }
-    ];
-    
-    graphics.strokePoints(points);
+    graphics.beginPath();
+    graphics.moveTo(0, -quarterSize);
+    graphics.lineTo(halfSize, 0);
+    graphics.lineTo(0, quarterSize);
+    graphics.lineTo(-halfSize, 0);
+    graphics.closePath();
+    graphics.strokePath();
   }
 
   // ==================== 配置和颜色方法 ====================

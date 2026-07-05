@@ -29,21 +29,24 @@ export class AVGScene extends Scene {
   }
   
   preload(): void {
-    // 预加载UI资源
+    // 预加载UI资源 - 使用占位图片
     this.load.image('backgrounds/ruins', 'assets/backgrounds/ruins.png');
     this.load.image('backgrounds/base_interior', 'assets/backgrounds/base_interior.png');
-    this.load.image('backgrounds/ash_outpost', 'assets/backgrounds/ash_outpost.png');
-    this.load.image('backgrounds/combat_arena', 'assets/backgrounds/combat_arena.png');
-    this.load.image('avatars/operator_default', 'assets/avatars/operator_default.png');
-    this.load.image('avatars/operator_alert', 'assets/avatars/operator_alert.png');
-    this.load.image('avatars/operator_curious', 'assets/avatars/operator_curious.png');
-    this.load.image('avatars/operator_concerned', 'assets/avatars/operator_concerned.png');
-    this.load.image('avatars/operator_warm', 'assets/avatars/operator_warm.png');
-    this.load.image('avatars/operator_neutral', 'assets/avatars/operator_neutral.png');
-    this.load.image('avatars/operator_hesitate', 'assets/avatars/operator_hesitate.png');
-    this.load.image('avatars/operator_gentle', 'assets/avatars/operator_gentle.png');
+    this.load.image('backgrounds/ash_outpost', 'assets/backgrounds/base_interior.png'); // 暂时使用相同图片
+    this.load.image('backgrounds/combat_arena', 'assets/backgrounds/ruins.png'); // 暂时使用相同图片
     
-    // 预加载音效
+    // 只使用一个占位头像
+    this.load.image('avatars/operator0', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_default', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_alert', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_curious', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_concerned', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_warm', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_neutral', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_hesitate', 'assets/avatars/operator0.png');
+    this.load.image('avatars/operator_gentle', 'assets/avatars/operator0.png');
+    
+    // 预加载音效（占位文件）
     this.load.audio('sfx/echo_rumble', 'assets/sfx/echo_rumble.mp3');
     this.load.audio('sfx/echo_whisper', 'assets/sfx/echo_whisper.mp3');
   }
