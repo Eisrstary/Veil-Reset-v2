@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="/style.css">
+    <title>覆幕重启 | Veil Reset</title>
+    <style>
+        html,body{margin:0;padding:0;width:100vw;height:100vh;overflow:hidden;background:#060610;font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+        #app{width:100vw;height:100vh;position:relative}
+        #phaser-canvas{position:absolute;inset:0;z-index:1}
+        #phaser-canvas canvas{display:block;image-rendering:auto}
+        #ui-overlay{position:absolute;inset:0;z-index:10;pointer-events:none}
+        #ui-overlay>*{pointer-events:auto}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="phaser-canvas"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

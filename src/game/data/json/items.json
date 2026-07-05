@@ -1,0 +1,301 @@
+{
+  "materials": [
+    {
+      "id": "mat_scrap_metal",
+      "name": "废金属",
+      "description": "从废墟中收集的金属碎片，可用于基础制作",
+      "type": "material",
+      "rarity": 1,
+      "stackLimit": 99,
+      "value": 10,
+      "uses": ["crafting_basic", "upgrade_equipment"],
+      "icon": "assets/items/materials/scrap_metal.png"
+    },
+    {
+      "id": "mat_energy_core",
+      "name": "能量核心",
+      "description": "从腐化机械中提取的能量源，可用于高级制作",
+      "type": "material",
+      "rarity": 2,
+      "stackLimit": 50,
+      "value": 50,
+      "uses": ["crafting_energy", "upgrade_weapons", "power_devices"],
+      "icon": "assets/items/materials/energy_core.png"
+    },
+    {
+      "id": "mat_industrial_gear",
+      "name": "工业齿轮",
+      "description": "工厂设备中的精密齿轮，可用于机械制作",
+      "type": "material",
+      "rarity": 2,
+      "stackLimit": 75,
+      "value": 30,
+      "uses": ["crafting_mechanical", "repair_equipment"],
+      "icon": "assets/items/materials/industrial_gear.png"
+    },
+    {
+      "id": "mat_research_data",
+      "name": "研究数据",
+      "description": "从实验室终端提取的数据芯片，包含重要信息",
+      "type": "material",
+      "rarity": 3,
+      "stackLimit": 30,
+      "value": 80,
+      "uses": ["tech_research", "decryption", "unlock_abilities"],
+      "icon": "assets/items/materials/research_data.png"
+    },
+    {
+      "id": "mat_digital_fragment",
+      "name": "数字碎片",
+      "description": "数据空间中破碎的信息流，可用于数字制作",
+      "type": "material",
+      "rarity": 3,
+      "stackLimit": 40,
+      "value": 65,
+      "uses": ["crafting_digital", "data_analysis", "ai_upgrades"],
+      "icon": "assets/items/materials/digital_fragment.png"
+    },
+    {
+      "id": "mat_memory_crystal",
+      "name": "记忆水晶",
+      "description": "从记忆核心中凝结的意识结晶，蕴含强大的精神能量",
+      "type": "material",
+      "rarity": 4,
+      "stackLimit": 20,
+      "value": 150,
+      "uses": ["crafting_psychic", "upgrade_mind", "consciousness_link"],
+      "icon": "assets/items/materials/memory_crystal.png"
+    }
+  ],
+  "consumables": [
+    {
+      "id": "consum_health_pack_small",
+      "name": "小型医疗包",
+      "description": "基础的医疗用品，可恢复少量生命值",
+      "type": "healing",
+      "rarity": 1,
+      "stackLimit": 20,
+      "value": 25,
+      "effect": {
+        "type": "heal",
+        "value": 100,
+        "target": "single"
+      },
+      "icon": "assets/items/consumables/health_pack_small.png"
+    },
+    {
+      "id": "consum_health_pack_medium",
+      "name": "中型医疗包",
+      "description": "标准的医疗用品，可恢复中量生命值",
+      "type": "healing",
+      "rarity": 2,
+      "stackLimit": 15,
+      "value": 60,
+      "effect": {
+        "type": "heal",
+        "value": 250,
+        "target": "single"
+      },
+      "icon": "assets/items/consumables/health_pack_medium.png"
+    },
+    {
+      "id": "consum_energy_stim",
+      "name": "能量刺激剂",
+      "description": "暂时提升干员能量恢复速度",
+      "type": "buff",
+      "rarity": 2,
+      "stackLimit": 15,
+      "value": 45,
+      "effect": {
+        "type": "energy_regen_boost",
+        "value": 1.5,
+        "duration": 60,
+        "target": "single"
+      },
+      "icon": "assets/items/consumables/energy_stim.png"
+    },
+    {
+      "id": "consum_data_booster",
+      "name": "数据增强剂",
+      "description": "暂时提升分析和解密能力",
+      "type": "buff",
+      "rarity": 3,
+      "stackLimit": 10,
+      "value": 75,
+      "effect": {
+        "type": "intelligence_boost",
+        "value": 1.3,
+        "duration": 90,
+        "target": "single"
+      },
+      "icon": "assets/items/consumables/data_booster.png"
+    },
+    {
+      "id": "consum_mental_focus",
+      "name": "精神专注药剂",
+      "description": "暂时提升精神能力和感知",
+      "type": "buff",
+      "rarity": 3,
+      "stackLimit": 8,
+      "value": 90,
+      "effect": {
+        "type": "psychic_boost",
+        "value": 1.4,
+        "duration": 75,
+        "target": "single"
+      },
+      "icon": "assets/items/consumables/mental_focus.png"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "eq_guardian_plating",
+      "name": "守卫装甲板",
+      "description": "从腐化守卫身上获取的强化装甲，提供额外防御",
+      "type": "armor",
+      "slot": "armor",
+      "rarity": 3,
+      "value": 120,
+      "stats": {
+        "defense": 15,
+        "health": 50,
+        "resistance_energy": 10
+      },
+      "requirements": {
+        "level": 3
+      },
+      "icon": "assets/items/equipment/guardian_plating.png"
+    },
+    {
+      "id": "eq_psychic_resonator",
+      "name": "精神谐振器",
+      "description": "增强精神连接和意识沟通的特殊设备",
+      "type": "accessory",
+      "slot": "accessory",
+      "rarity": 4,
+      "value": 200,
+      "stats": {
+        "psychic_power": 20,
+        "energy_regen": 2,
+        "resistance_psychic": 15
+      },
+      "requirements": {
+        "level": 5,
+        "ability": "ability_memory_manipulation"
+      },
+      "icon": "assets/items/equipment/psychic_resonator.png"
+    },
+    {
+      "id": "eq_scavenger_rifle",
+      "name": "拾荒者步枪",
+      "description": "在废墟中拼凑而成的可靠武器，适合各种战斗",
+      "type": "weapon",
+      "slot": "weapon",
+      "rarity": 2,
+      "value": 85,
+      "stats": {
+        "attack": 25,
+        "accuracy": 80,
+        "range": 200
+      },
+      "requirements": {
+        "level": 2
+      },
+      "icon": "assets/items/equipment/scavenger_rifle.png"
+    },
+    {
+      "id": "eq_data_analyzer",
+      "name": "数据分析仪",
+      "description": "用于快速解析数字信息和数据的便携设备",
+      "type": "special",
+      "slot": "special",
+      "rarity": 3,
+      "value": 110,
+      "stats": {
+        "intelligence": 15,
+        "data_decryption": 30,
+        "scan_range": 150
+      },
+      "requirements": {
+        "level": 4,
+        "ability": "ability_data_analysis"
+      },
+      "icon": "assets/items/equipment/data_analyzer.png"
+    }
+  ],
+  "tech": [
+    {
+      "id": "tech_blueprint_energy_shield",
+      "name": "能量护盾蓝图",
+      "description": "解锁能量护盾制作技术的设计图纸",
+      "type": "blueprint",
+      "rarity": 3,
+      "value": 150,
+      "unlocks": ["craft_energy_shield"],
+      "researchTime": 180,
+      "requirements": {
+        "materials": [
+          { "id": "mat_energy_core", "quantity": 3 },
+          { "id": "mat_industrial_gear", "quantity": 2 },
+          { "id": "mat_research_data", "quantity": 1 }
+        ]
+      },
+      "icon": "assets/items/tech/blueprint_energy_shield.png"
+    },
+    {
+      "id": "tech_upgrade_neural_interface",
+      "name": "神经接口升级",
+      "description": "增强人机连接能力的升级模块",
+      "type": "upgrade",
+      "rarity": 4,
+      "value": 180,
+      "effect": {
+        "type": "permanent_buff",
+        "stats": {
+          "intelligence": 10,
+          "reaction_time": 0.9,
+          "data_processing": 25
+        }
+      },
+      "requirements": {
+        "level": 5,
+        "materials": [
+          { "id": "mat_digital_fragment", "quantity": 4 },
+          { "id": "mat_research_data", "quantity": 2 }
+        ]
+      },
+      "icon": "assets/items/tech/upgrade_neural_interface.png"
+    },
+    {
+      "id": "tech_upgrade_consciousness_link",
+      "name": "意识连接升级",
+      "description": "允许更深层次精神连接的高级技术",
+      "type": "upgrade",
+      "rarity": 5,
+      "value": 250,
+      "effect": {
+        "type": "permanent_buff",
+        "stats": {
+          "psychic_power": 25,
+          "team_synergy": 15,
+          "consciousness_range": 300
+        }
+      },
+      "requirements": {
+        "level": 6,
+        "materials": [
+          { "id": "mat_memory_crystal", "quantity": 2 },
+          { "id": "mat_digital_fragment", "quantity": 3 }
+        ]
+      },
+      "icon": "assets/items/tech/upgrade_consciousness_link.png"
+    }
+  ],
+  "meta": {
+    "totalItems": 22,
+    "categories": ["materials", "consumables", "equipment", "tech"],
+    "version": "1.0.0",
+    "lastUpdated": "2026-07-05",
+    "description": "覆幕重启物品系统配置"
+  }
+}

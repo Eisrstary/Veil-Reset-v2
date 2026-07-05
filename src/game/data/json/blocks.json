@@ -1,0 +1,567 @@
+{
+  "blocks": [
+    {
+      "id": "block_tutorial_zone",
+      "name": "启程废墟",
+      "description": "世界重启后的第一个安全区域，适合新手熟悉基本操作",
+      "type": "explore",
+      "tier": 1,
+      "generationType": "ruins",
+      "mapConfig": {
+        "width": 35,
+        "height": 25,
+        "seed": 1001,
+        "specialTerrain": ["light_cover", "broken_walls", "safe_zones"]
+      },
+      "content": {
+        "enemies": [
+          {
+            "enemyTypeId": "enemy_scavenger_weak",
+            "count": { "min": 2, "max": 4 }
+          }
+        ],
+        "echoes": [
+          {
+            "echoId": "echo_chapter1_01",
+            "position": { "x": 10, "y": 8 },
+            "hidden": false
+          }
+        ],
+        "resources": [
+          {
+            "type": "material",
+            "resourceId": "mat_scrap_metal",
+            "position": { "x": 5, "y": 15 },
+            "quantity": { "min": 3, "max": 5 },
+            "respawnTime": 300
+          }
+        ],
+        "interactions": [
+          {
+            "id": "tutorial_terminal",
+            "position": { "x": 18, "y": 12 },
+            "type": "dialogue",
+            "data": {
+              "dialogueId": "dialogue_world_intro",
+              "speaker": "system_guide"
+            },
+            "conditions": ["first_visit"]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_tutorial_explore",
+            "type": "reach_location",
+            "description": "探索废墟深处",
+            "data": { "targetX": 30, "targetY": 20 },
+            "completionCondition": "player_reaches_target",
+            "rewards": ["exp_100", "unlock_basic_skills"]
+          }
+        ],
+        "environmentEffects": ["gentle_wind", "distant_echoes"]
+      },
+      "connections": {
+        "east": {
+          "blockId": "block_rusted_factory",
+          "entrancePosition": { "x": 0, "y": 12 }
+        }
+      },
+      "entryConditions": {
+        "minLevel": 1
+      },
+      "meta": {
+        "estimatedTime": 10,
+        "storyRelevance": 2,
+        "recommendedPartySize": 1,
+        "theme": "post_apocalyptic_tutorial",
+        "music": {
+          "bgm": "music/exploration_calm.mp3",
+          "battle": "music/battle_tutorial.mp3"
+        }
+      },
+      "completionRewards": {
+        "experience": 150,
+        "currency": 500,
+        "items": [
+          { "id": "mat_scrap_metal", "quantity": 5 },
+          { "id": "consum_health_pack_small", "quantity": 3 }
+        ],
+        "unlocks": ["block_rusted_factory", "op_observer"]
+      }
+    },
+    {
+      "id": "block_rusted_factory",
+      "name": "腐蚀工厂",
+      "description": "废弃的工业设施，被腐蚀性能量污染，充满了危险的机械敌人",
+      "type": "combat",
+      "tier": 2,
+      "generationType": "rooms",
+      "mapConfig": {
+        "width": 45,
+        "height": 35,
+        "seed": 1002,
+        "specialTerrain": ["acid_pools", "broken_machinery", "conveyor_belts"]
+      },
+      "content": {
+        "enemies": [
+          {
+            "enemyTypeId": "enemy_corrupted_drone",
+            "count": { "min": 5, "max": 7 }
+          },
+          {
+            "enemyTypeId": "enemy_rust_golem",
+            "count": { "min": 2, "max": 3 }
+          },
+          {
+            "enemyTypeId": "boss_corrupted_guardian",
+            "count": 1,
+            "area": { "x": 35, "y": 15, "width": 8, "height": 8 }
+          }
+        ],
+        "echoes": [
+          {
+            "echoId": "echo_chapter1_02",
+            "position": { "x": 20, "y": 10 },
+            "hidden": true,
+            "unlockConditions": ["defeat_boss_corrupted_guardian"]
+          }
+        ],
+        "resources": [
+          {
+            "type": "material",
+            "resourceId": "mat_energy_core",
+            "position": { "x": 8, "y": 30 },
+            "quantity": { "min": 1, "max": 2 },
+            "respawnTime": 600
+          },
+          {
+            "type": "material",
+            "resourceId": "mat_industrial_gear",
+            "position": { "x": 25, "y": 5 },
+            "quantity": { "min": 2, "max": 4 },
+            "respawnTime": 450
+          }
+        ],
+        "interactions": [
+          {
+            "id": "factory_control_panel",
+            "position": { "x": 15, "y": 20 },
+            "type": "puzzle",
+            "data": {
+              "puzzleType": "circuit_repair",
+              "difficulty": 2
+            },
+            "effects": ["disable_traps", "reveal_hidden_path"]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_defeat_corrupted_guardian",
+            "type": "defeat_all",
+            "description": "击败腐化守卫",
+            "data": { "enemyIds": ["boss_corrupted_guardian"] },
+            "completionCondition": "all_enemies_defeated",
+            "rewards": ["exp_500", "mat_energy_core", "unlock_research_lab"]
+          }
+        ],
+        "environmentEffects": ["corrosion_aura", "machinery_noise", "occasional_sparks"]
+      },
+      "connections": {
+        "west": {
+          "blockId": "block_tutorial_zone",
+          "entrancePosition": { "x": 44, "y": 17 }
+        },
+        "north": {
+          "blockId": "block_research_lab",
+          "entrancePosition": { "x": 22, "y": 0 }
+        }
+      },
+      "entryConditions": {
+        "minLevel": 2,
+        "requiredBlocks": ["block_tutorial_zone"]
+      },
+      "meta": {
+        "estimatedTime": 25,
+        "storyRelevance": 5,
+        "recommendedPartySize": 2,
+        "theme": "industrial_corruption",
+        "music": {
+          "bgm": "music/factory_ambient.mp3",
+          "battle": "music/battle_industrial.mp3",
+          "boss": "music/boss_mechanical.mp3"
+        }
+      },
+      "completionRewards": {
+        "experience": 800,
+        "currency": 1500,
+        "items": [
+          { "id": "mat_energy_core", "quantity": 3 },
+          { "id": "eq_guardian_plating", "quantity": 1 }
+        ],
+        "unlocks": ["block_research_lab", "ability_echo_sense"]
+      }
+    },
+    {
+      "id": "block_research_lab",
+      "name": "遗忘实验室",
+      "description": "曾经进行禁忌研究的设施，现在充满了危险的实验体和残留的科技",
+      "type": "story",
+      "tier": 3,
+      "generationType": "rooms",
+      "mapConfig": {
+        "width": 50,
+        "height": 40,
+        "seed": 1003,
+        "specialTerrain": ["lab_equipment", "containment_fields", "data_terminals"]
+      },
+      "content": {
+        "enemies": [
+          {
+            "enemyTypeId": "enemy_mutated_specimen",
+            "count": { "min": 6, "max": 8 }
+          },
+          {
+            "enemyTypeId": "enemy_security_bot",
+            "count": { "min": 3, "max": 4 }
+          }
+        ],
+        "echoes": [
+          {
+            "echoId": "echo_chapter1_03",
+            "position": { "x": 25, "y": 18 },
+            "hidden": false
+          },
+          {
+            "echoId": "echo_chapter1_04",
+            "position": { "x": 40, "y": 30 },
+            "hidden": true,
+            "unlockConditions": ["find_lab_keycard"]
+          }
+        ],
+        "resources": [
+          {
+            "type": "material",
+            "resourceId": "mat_research_data",
+            "position": { "x": 12, "y": 8 },
+            "quantity": { "min": 2, "max": 3 },
+            "respawnTime": 900
+          },
+          {
+            "type": "consumable",
+            "resourceId": "consum_energy_stim",
+            "position": { "x": 35, "y": 15 },
+            "quantity": { "min": 1, "max": 2 },
+            "respawnTime": 1200
+          }
+        ],
+        "interactions": [
+          {
+            "id": "lab_mainframe",
+            "position": { "x": 25, "y": 10 },
+            "type": "dialogue",
+            "data": {
+              "dialogueId": "dialogue_lab_discovery",
+              "speaker": "ai_fragment"
+            },
+            "conditions": ["power_restored"]
+          },
+          {
+            "id": "specimen_containment",
+            "position": { "x": 15, "y": 25 },
+            "type": "mechanism",
+            "data": {
+              "mechanismType": "containment_release",
+              "riskLevel": 3
+            },
+            "effects": ["release_specimens", "access_secret_room"]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_restore_lab_power",
+            "type": "reach_location",
+            "description": "前往实验室主控室恢复电力",
+            "data": { "targetX": 40, "targetY": 5 },
+            "completionCondition": "activate_power_switch",
+            "rewards": ["exp_300", "unlock_data_archive"]
+          },
+          {
+            "id": "obj_recover_research_data",
+            "type": "collect_item",
+            "description": "收集至少3份研究数据",
+            "data": { "itemId": "mat_research_data", "requiredCount": 3 },
+            "completionCondition": "items_collected",
+            "rewards": ["exp_400", "tech_blueprint_energy_shield"]
+          }
+        ],
+        "environmentEffects": ["fluorescent_flicker", "distant_alarms", "static_field"]
+      },
+      "connections": {
+        "south": {
+          "blockId": "block_rusted_factory",
+          "entrancePosition": { "x": 25, "y": 39 }
+        },
+        "east": {
+          "blockId": "block_data_archive",
+          "entrancePosition": { "x": 0, "y": 20 }
+        }
+      },
+      "entryConditions": {
+        "minLevel": 3,
+        "requiredBlocks": ["block_rusted_factory"],
+        "requiredEchoes": ["echo_chapter1_02"]
+      },
+      "meta": {
+        "estimatedTime": 30,
+        "storyRelevance": 8,
+        "recommendedPartySize": 2,
+        "theme": "scientific_horror",
+        "music": {
+          "bgm": "music/lab_ambient.mp3",
+          "battle": "music/battle_synthetic.mp3"
+        }
+      },
+      "completionRewards": {
+        "experience": 1200,
+        "currency": 2000,
+        "items": [
+          { "id": "mat_research_data", "quantity": 5 },
+          { "id": "tech_blueprint_energy_shield", "quantity": 1 },
+          { "id": "consum_energy_stim", "quantity": 2 }
+        ],
+        "unlocks": ["block_data_archive", "op_technician", "ability_data_analysis"]
+      }
+    },
+    {
+      "id": "block_data_archive",
+      "name": "数据档案馆",
+      "description": "存储着世界重启前重要信息的数字废墟，充满了逻辑谜题和数据幽灵",
+      "type": "puzzle",
+      "tier": 3,
+      "generationType": "rooms",
+      "mapConfig": {
+        "width": 55,
+        "height": 45,
+        "seed": 1004,
+        "specialTerrain": ["server_racks", "hologram_displays", "data_streams"]
+      },
+      "content": {
+        "enemies": [
+          {
+            "enemyTypeId": "enemy_data_ghost",
+            "count": { "min": 4, "max": 6 }
+          },
+          {
+            "enemyTypeId": "enemy_corrupted_ai",
+            "count": { "min": 2, "max": 3 }
+          }
+        ],
+        "echoes": [
+          {
+            "echoId": "echo_chapter2_01",
+            "position": { "x": 30, "y": 22 },
+            "hidden": false
+          },
+          {
+            "echoId": "echo_chapter2_02",
+            "position": { "x": 45, "y": 35 },
+            "hidden": true,
+            "unlockConditions": ["solve_data_puzzle"]
+          }
+        ],
+        "resources": [
+          {
+            "type": "material",
+            "resourceId": "mat_digital_fragment",
+            "position": { "x": 10, "y": 15 },
+            "quantity": { "min": 1, "max": 3 },
+            "respawnTime": 750
+          }
+        ],
+        "interactions": [
+          {
+            "id": "main_archive_terminal",
+            "position": { "x": 28, "y": 25 },
+            "type": "puzzle",
+            "data": {
+              "puzzleType": "data_decryption",
+              "difficulty": 4
+            },
+            "effects": ["unlock_restricted_access", "reveal_truth_fragment"]
+          },
+          {
+            "id": "memory_core_access",
+            "position": { "x": 40, "y": 20 },
+            "type": "dialogue",
+            "data": {
+              "dialogueId": "dialogue_archive_ai",
+              "speaker": "archive_custodian"
+            },
+            "conditions": ["decryption_complete"]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_decrypt_archive_data",
+            "type": "reach_location",
+            "description": "解密主档案馆数据",
+            "data": { "targetX": 28, "targetY": 25 },
+            "completionCondition": "puzzle_solved",
+            "rewards": ["exp_400", "unlock_memory_core"]
+          },
+          {
+            "id": "obj_defeat_corrupted_ai",
+            "type": "defeat_all",
+            "description": "清除所有被腐蚀的AI实体",
+            "data": { "enemyType": "enemy_corrupted_ai" },
+            "completionCondition": "all_enemies_defeated",
+            "rewards": ["exp_350", "tech_upgrade_neural_interface"]
+          }
+        ],
+        "environmentEffects": ["digital_static", "hologram_glitch", "data_flow_visual"]
+      },
+      "connections": {
+        "west": {
+          "blockId": "block_research_lab",
+          "entrancePosition": { "x": 54, "y": 22 }
+        },
+        "north": {
+          "blockId": "block_memory_core",
+          "entrancePosition": { "x": 27, "y": 0 }
+        }
+      },
+      "entryConditions": {
+        "minLevel": 4,
+        "requiredBlocks": ["block_research_lab"],
+        "requiredEchoes": ["echo_chapter1_03", "echo_chapter1_04"]
+      },
+      "meta": {
+        "estimatedTime": 35,
+        "storyRelevance": 9,
+        "recommendedPartySize": 3,
+        "theme": "cyberspace_ruins",
+        "music": {
+          "bgm": "music/digital_archive.mp3",
+          "battle": "music/battle_digital.mp3"
+        }
+      },
+      "completionRewards": {
+        "experience": 1500,
+        "currency": 2500,
+        "items": [
+          { "id": "mat_digital_fragment", "quantity": 6 },
+          { "id": "tech_upgrade_neural_interface", "quantity": 1 },
+          { "id": "consum_data_booster", "quantity": 2 }
+        ],
+        "unlocks": ["block_memory_core", "op_hacker", "ability_data_decryption"]
+      }
+    },
+    {
+      "id": "block_memory_core",
+      "name": "记忆核心",
+      "description": "世界重启前集体意识的存储中心，现在是一个扭曲的精神空间",
+      "type": "boss",
+      "tier": 4,
+      "generationType": "handcrafted",
+      "mapConfig": {
+        "width": 40,
+        "height": 30,
+        "seed": 1005,
+        "specialTerrain": ["memory_fragments", "consciousness_streams", "void_pockets"]
+      },
+      "content": {
+        "enemies": [
+          {
+            "enemyTypeId": "boss_echo_of_despair",
+            "count": 1,
+            "area": { "x": 20, "y": 15, "width": 10, "height": 10 }
+          },
+          {
+            "enemyTypeId": "enemy_memory_phantom",
+            "count": { "min": 3, "max": 5 }
+          }
+        ],
+        "echoes": [
+          {
+            "echoId": "echo_chapter2_03",
+            "position": { "x": 10, "y": 5 },
+            "hidden": false
+          },
+          {
+            "echoId": "echo_chapter2_04",
+            "position": { "x": 30, "y": 25 },
+            "hidden": true,
+            "unlockConditions": ["defeat_boss_echo_of_despair"]
+          }
+        ],
+        "resources": [],
+        "interactions": [
+          {
+            "id": "core_consciousness",
+            "position": { "x": 20, "y": 15 },
+            "type": "dialogue",
+            "data": {
+              "dialogueId": "dialogue_final_confrontation",
+              "speaker": "collective_consciousness"
+            },
+            "conditions": ["boss_defeated"]
+          }
+        ],
+        "objectives": [
+          {
+            "id": "obj_defeat_echo_of_despair",
+            "type": "defeat_all",
+            "description": "击败绝望回响",
+            "data": { "enemyIds": ["boss_echo_of_despair"] },
+            "completionCondition": "boss_defeated",
+            "rewards": ["exp_1000", "unlock_central_citadel", "echo_chapter2_04"]
+          }
+        ],
+        "environmentEffects": ["psychic_distortion", "memory_flashbacks", "reality_tears"]
+      },
+      "connections": {
+        "south": {
+          "blockId": "block_data_archive",
+          "entrancePosition": { "x": 20, "y": 29 }
+        },
+        "east": {
+          "blockId": "block_central_citadel",
+          "entrancePosition": { "x": 0, "y": 15 }
+        }
+      },
+      "entryConditions": {
+        "minLevel": 5,
+        "requiredBlocks": ["block_data_archive"],
+        "requiredBosses": ["boss_corrupted_guardian"],
+        "requiredEchoes": ["echo_chapter2_01", "echo_chapter2_02"]
+      },
+      "meta": {
+        "estimatedTime": 40,
+        "storyRelevance": 10,
+        "recommendedPartySize": 3,
+        "theme": "psychic_void",
+        "music": {
+          "bgm": "music/memory_core.mp3",
+          "battle": "music/battle_psychic.mp3",
+          "boss": "music/boss_final_memory.mp3"
+        }
+      },
+      "completionRewards": {
+        "experience": 2000,
+        "currency": 3500,
+        "items": [
+          { "id": "mat_memory_crystal", "quantity": 3 },
+          { "id": "eq_psychic_resonator", "quantity": 1 },
+          { "id": "tech_upgrade_consciousness_link", "quantity": 1 }
+        ],
+        "unlocks": ["block_central_citadel", "op_psychic", "ability_memory_manipulation"]
+      }
+    }
+  ],
+  "meta": {
+    "totalBlocks": 5,
+    "version": "1.0.0",
+    "lastUpdated": "2026-07-05",
+    "description": "覆幕重启世界区块配置 - 第1-5区块"
+  }
+}

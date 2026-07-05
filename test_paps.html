@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAPS WASM 集成测试</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #0a0e1a, #1a1f30);
+            color: #e0e8ff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(10, 15, 30, 0.8);
+            border: 1px solid #2a3a5a;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #80b0f0;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(128, 176, 240, 0.3);
+        }
+        h2 {
+            color: #6090d0;
+            border-bottom: 2px solid #2a4a7a;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        .status {
+            background: rgba(30, 45, 80, 0.5);
+            border: 1px solid #3a5a8a;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .status.success {
+            border-color: #4a8a5a;
+            background: rgba(40, 80, 50, 0.3);
+        }
+        .status.error {
+            border-color: #8a4a4a;
+            background: rgba(80, 40, 40, 0.3);
+        }
+        .test-section {
+            background: rgba(20, 30, 50, 0.6);
+            border: 1px solid #2a4a6a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .btn {
+            background: linear-gradient(135deg, #2a5a8a, #3a7aba);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #3a6a9a, #4a8aca);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 122, 186, 0.4);
+        }
+        .btn:disabled {
+            background: #3a4a5a;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .output {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a3a5a;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .card {
+            background: rgba(25, 40, 65, 0.5);
+            border: 1px solid #3a5a8a;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            background: rgba(35, 50, 85, 0.7);
+            border-color: #4a6a9a;
+        }
+        .param-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .param-item {
+            background: rgba(30, 45, 70, 0.4);
+            border: 1px solid #2a4a6a;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .param-id {
+            color: #8ec5ff;
+            font-weight: bold;
+        }
+        .param-value {
+            color: #f4d88a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 PAPS WASM 集成测试</h1>
+        
+        <div class="status" id="status">
+            准备测试 PAPS WASM 集成...
+        </div>
+        
+        <div class="test-section">
+            <h2>🏗️ 基础功能测试</h2>
+            <button class="btn" onclick="runBasicTests()">运行基础测试</button>
+            <div class="output" id="basicOutput"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎭 角色生成测试</h2>
+            <button class="btn" onclick="generateCharacter()">生成角色</button>
+            <div class="output" id="characterOutput"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 批量生成测试</h2>
+            <button class="btn" onclick="batchGenerate()">生成5个角色</button>
+            <div class="output" id="batchOutput"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔧 API调用测试</h2>
+            <div class="grid">
+                <button class="btn" onclick="testVersion()">测试版本</button>
+                <button class="btn" onclick="testParamCount()">测试参数数量</button>
+                <button class="btn" onclick="testSystemInfo()">测试系统信息</button>
+                <button class="btn" onclick="testExport()">测试导出功能</button>
+            </div>
+            <div class="output" id="apiOutput"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎯 集成状态</h2>
+            <div id="integrationStatus">
+                等待测试运行...
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        let papsModule = null;
+        let PapsWasm = null;
+        
+        async function initPAPS() {
+            try {
+                const status = document.getElementById('status');
+                status.textContent = "正在初始化 PAPS WASM...";
+                status.className = "status";
+                
+                // 导入PAPS模块
+                papsModule = await import('./personality_generator.js');
+                
+                // 初始化WASM
+                if (papsModule.default) {
+                    await papsModule.default();
+                }
+                
+                PapsWasm = papsModule.PapsWasm;
+                
+                status.textContent = "✅ PAPS WASM 初始化成功！";
+                status.className = "status success";
+                
+                // 更新集成状态
+                document.getElementById('integrationStatus').innerHTML = `
+                    <div class="card">
+                        <h3>✅ PAPS WASM 已就绪</h3>
+                        <p><strong>模块状态：</strong>已加载</p>
+                        <p><strong>可用API：</strong>PapsWasm 类</p>
+                        <p><strong>文件大小：</strong>~391KB (WASM) + 18KB (JS)</p>
+                    </div>
+                `;
+                
+            } catch (error) {
+                const status = document.getElementById('status');
+                status.textContent = "❌ PAPS WASM 初始化失败：" + error.message;
+                status.className = "status error";
+                console.error("PAPS初始化错误:", error);
+            }
+        }
+        
+        async function runBasicTests() {
+            if (!PapsWasm) {
+                alert("请先等待PAPS初始化完成");
+                return;
+            }
+            
+            const output = document.getElementById('basicOutput');
+            output.textContent = "运行基础测试...\n";
+            
+            try {
+                const wasm = new PapsWasm();
+                output.textContent += "✅ PapsWasm实例创建成功\n";
+                
+                wasm.init_random();
+                output.textContent += "✅ init_random() 成功\n";
+                
+                const version = wasm.version();
+                output.textContent += `✅ 版本号: ${version}\n`;
+                
+                const paramCount = wasm.parameter_count();
+                output.textContent += `✅ 参数总数: ${paramCount}\n`;
+                
+                const aiMd = wasm.export_ai_md();
+                output.textContent += `✅ AI Markdown导出成功 (${aiMd.length} 字符)\n`;
+                output.textContent += `示例: ${aiMd.substring(0, 150)}...\n`;
+                
+                wasm.free();
+                output.textContent += "✅ 实例已释放\n\n";
+                output.textContent += "🎉 所有基础测试通过！";
+                
+            } catch (error) {
+                output.textContent += `❌ 测试失败: ${error.message}\n`;
+                console.error(error);
+            }
+        }
+        
+        async function generateCharacter() {
+            if (!PapsWasm) return;
+            
+            const output = document.getElementById('characterOutput');
+            output.textContent = "生成角色中...\n";
+            
+            try {
+                const wasm = new PapsWasm();
+                wasm.init_random();
+                
+                // 设置一些关键倾向
+                wasm.set_tendency('A008', 'very_low');   // 低威胁感知
+                wasm.set_tendency('A009', 'very_high');  // 高共情
+                wasm.set_tendency('B015', 'high');       // 内疚感
+                wasm.set_tendency('C026', 'very_high');  // 意义寻求
+                wasm.set_tendency('F061', 'low');        // 低信任
+                
+                const aiPrompt = wasm.export_ai_md();
+                const humanReadable = wasm.export_human_md();
+                const rawData = JSON.parse(wasm.export_raw_json());
+                
+                output.textContent = `🎭 角色生成成功！\n\n`;
+                output.textContent += `📝 AI Prompt 长度: ${aiPrompt.length} 字符\n`;
+                output.textContent += `📖 人类可读 长度: ${humanReadable.length} 字符\n`;
+                output.textContent += `📊 原始数据: ${Object.keys(rawData).length} 个参数\n\n`;
+                
+                // 显示关键参数
+                output.textContent += "🔑 关键参数值:\n";
+                const keyParams = ['A008', 'A009', 'B015', 'C026', 'F061'];
+                keyParams.forEach(param => {
+                    const value = wasm.get_value(param);
+                    output.textContent += `  ${param}: ${value.toFixed(3)}\n`;
+                });
+                
+                // 显示AI Prompt预览
+                output.textContent += "\n🤖 AI Prompt 预览:\n";
+                output.textContent += aiPrompt.substring(0, 300) + "...";
+                
+                wasm.free();
+                
+            } catch (error) {
+                output.textContent += `❌ 角色生成失败: ${error.message}\n`;
+                console.error(error);
+            }
+        }
+        
+        async function batchGenerate() {
+            if (!PapsWasm) return;
+            
+            const output = document.getElementById('batchOutput');
+            output.textContent = "批量生成角色中...\n";
+            
+            try {
+                const results = [];
+                const count = 5;
+                
+                for (let i = 0; i < count; i++) {
+                    const wasm = new PapsWasm();
+                    wasm.init_random();
+                    
+                    // 记录关键参数
+                    const keyParams = ['A008', 'B015', 'C026', 'F061'];
+                    const params = {};
+                    keyParams.forEach(param => {
+                        params[param] = wasm.get_value(param);
+                    });
+                    
+                    const aiMd = wasm.export_ai_md();
+                    results.push({
+                        id: i + 1,
+                        params,
+                        aiMdLength: aiMd.length,
+                        aiMdPreview: aiMd.substring(0, 100) + "..."
+                    });
+                    
+                    wasm.free();
+                }
+                
+                output.textContent = `✅ 成功生成 ${results.length} 个角色\n\n`;
+                
+                results.forEach((result, index) => {
+                    output.textContent += `角色 #${result.id}:\n`;
+                    output.textContent += `  AI Prompt 长度: ${result.aiMdLength} 字符\n`;
+                    output.textContent += `  关键参数: ${JSON.stringify(result.params)}\n`;
+                    output.textContent += `  预览: ${result.aiMdPreview}\n\n`;
+                });
+                
+                output.textContent += "🎯 每个角色的参数值都有所不同，展示了PAPS的随机生成能力。";
+                
+            } catch (error) {
+                output.textContent += `❌ 批量生成失败: ${error.message}\n`;
+                console.error(error);
+            }
+        }
+        
+        async function testVersion() {
+            if (!PapsWasm) return;
+            
+            const output = document.getElementById('apiOutput');
+            try {
+                const wasm = new PapsWasm();
+                const version = wasm.version();
+                output.textContent = `📦 PAPS 版本: ${version}`;
+                wasm.free();
+            } catch (error) {
+                output.textContent = `❌ 版本测试失败: ${error.message}`;
+            }
+        }
+        
+        async function testParamCount() {
+            if (!PapsWasm) return;
+            
+            const output = document.getElementById('apiOutput');
+            try {
+                const wasm = new PapsWasm();
+                const count = wasm.parameter_count();
+                output.textContent = `🔢 参数总数: ${count}`;
+                wasm.free();
+            } catch (error) {
+                output.textContent = `❌ 参数数量测试失败: ${error.message}`;
+            }
+        }
+        
+        async function testSystemInfo() {
+            if (!PapsWasm) return;
+            
+            const output = document.getElementById('apiOutput');
+            try {
+                const wasm = new PapsWasm();
+                const sysInfo = wasm.system_info_json();
+                const info = JSON.parse(sysInfo);
+                output.textContent = `🖥️ 系统信息:\n${JSON.stringify(info, null, 2)}`;
+                wasm.free();
+            } catch (error) {
+                output.textContent = `❌ 系统信息测试失败: ${error.message}`;
+            }
+        }
+        
+        async function testExport() {
+            if (!PapsWasm) return;
+            
+            const output = document.getElementById('apiOutput');
+            try {
+                const wasm = new PapsWasm();
+                wasm.init_random();
+                
+                const aiMd = wasm.export_ai_md();
+                const humanMd = wasm.export_human_md();
+                const rawJson = wasm.export_raw_json();
+                
+                output.textContent = `📤 导出功能测试:\n`;
+                output.textContent += `  AI Markdown: ${aiMd.length} 字符\n`;
+                output.textContent += `  人类可读: ${humanMd.length} 字符\n`;
+                output.textContent += `  原始JSON: ${rawJson.length} 字符\n`;
+                output.textContent += `\n🔍 AI Prompt 预览:\n${aiMd.substring(0, 200)}...`;
+                
+                wasm.free();
+            } catch (error) {
+                output.textContent = `❌ 导出功能测试失败: ${error.message}`;
+            }
+        }
+        
+        // 初始化
+        initPAPS().catch(console.error);
+    </script>
+</body>
+</html>
